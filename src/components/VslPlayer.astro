@@ -1,0 +1,48 @@
+---
+import { Image } from 'astro:assets';
+import poster from '../assets/persona/after-woman.png';
+import { vsl, CALENDLY_URL } from '../lib/site';
+---
+
+{
+  vsl.embedUrl ? (
+    <div class="aspect-video overflow-hidden rounded-[24px] shadow-[var(--shadow-warm-lg)] ring-1 ring-[oklch(0.27_0.012_350/0.08)]">
+      <iframe
+        src={vsl.embedUrl}
+        title="Video de prezentare SG Design"
+        loading="lazy"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowfullscreen
+        class="h-full w-full border-0"
+      />
+    </div>
+  ) : (
+    /* PLACEHOLDER: setează `vsl.embedUrl` în site.ts pentru a integra videoul real.
+       Până atunci, întreaga ramă deschide Calendly (butonul play nu e inert). */
+    <a
+      href={CALENDLY_URL}
+      data-calendly
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Videoul de prezentare e disponibil în curând. Click pentru a programa un apel gratuit."
+      class="vsl-frame group relative block aspect-video overflow-hidden rounded-[24px] shadow-[var(--shadow-warm-lg)] ring-1 ring-[oklch(0.27_0.012_350/0.08)]"
+    >
+      <Image
+        src={poster}
+        alt="Cadru din videoul de prezentare SG Design"
+        widths={[600, 1000, 1400]}
+        sizes="(max-width: 900px) 100vw, 880px"
+        class="h-full w-full object-cover"
+      />
+      <span class="absolute inset-0 bg-charcoal/35 transition-colors duration-500 group-hover:bg-charcoal/45" />
+      <span class="absolute left-1/2 top-1/2 grid h-[4.5rem] w-[4.5rem] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-accent text-ink shadow-[var(--shadow-warm)] transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-110">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5Z" />
+        </svg>
+      </span>
+      <span class="absolute bottom-4 left-4 rounded-full bg-charcoal/75 px-3 py-1 text-xs font-medium tracking-wide text-on-charcoal">
+        Video în curând · click pentru a programa un apel
+      </span>
+    </a>
+  )
+}

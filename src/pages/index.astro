@@ -3,24 +3,24 @@ import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Button from '../components/Button.astro';
 import Eyebrow from '../components/Eyebrow.astro';
-import Vsl from '../components/Vsl.astro';
+import VslPlayer from '../components/VslPlayer.astro';
 import Marquee from '../components/Marquee.astro';
 import Portfolio from '../components/Portfolio.astro';
 import Testimonials from '../components/Testimonials.astro';
 import InkDivider from '../components/InkDivider.astro';
 
-import logoSg from '../assets/brand/logo-sg.png';
-import heroImg from '../assets/hero/hero-course.png';
+import logoSg from '../assets/brand/logo.png';
 import oldSiteImg from '../assets/compare/old-site.png';
 import afterImg from '../assets/compare/after.png';
-import personBeforeImg from '../assets/compare/person-before.png';
-import personAfterImg from '../assets/persona/after-woman.png';
+import personBeforeImg from '../assets/compare/person-before.jpg';
+import personAfterImg from '../assets/compare/person-after.jpg';
 
 import {
   CALENDLY_URL,
   brand,
   nav,
   hero,
+  vsl,
   identify,
   agitate,
   contrast,
@@ -48,7 +48,7 @@ const pageDesc =
   >
     <nav class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3 sm:py-3.5">
       <a href="#top" class="relative z-[60] flex items-center" aria-label={`${brand.name} acasă`}>
-        <Image src={logoSg} alt={brand.name} height={72} class="block h-14 w-auto sm:h-16" />
+        <Image src={logoSg} alt={brand.name} height={56} class="block h-11 w-auto sm:h-12" />
       </a>
 
       <div data-nav-menu class="nav-menu">
@@ -77,60 +77,33 @@ const pageDesc =
   <main id="main">
     <a id="top"></a>
 
-    <!-- ====================================================== HERO -->
-    <section class="relative flex min-h-svh flex-col justify-center overflow-hidden pt-20 pb-10 sm:pt-24 sm:pb-12">
-      <div class="pointer-events-none absolute -right-24 -top-20 h-[26rem] w-[26rem] rounded-full bg-peach blur-3xl opacity-50"></div>
-      <div class="relative mx-auto grid w-full max-w-6xl items-center gap-x-12 gap-y-10 px-5 lg:grid-cols-2">
-        <div class="reveal">
-          <p data-reveal-child class="reveal mb-4 max-w-md text-[0.8rem] font-medium uppercase tracking-[0.14em] text-muted">
-            {hero.preheader}
-          </p>
-          <h1 class="display-1 hero-title">
-            <span class="line">{hero.headline[0]}</span>
-            <span class="line">
-              {hero.headline[1]}<span class="mark-word"
-                >{hero.headline[2]}<svg viewBox="0 0 300 12" aria-hidden="true"
-                  ><path d="M4 8c52-5 132-7 220-5 26 .6 52 2 74 4" /></svg
-                ></span>{hero.headline[3]}
-            </span>
-          </h1>
-          <p class="lede mt-5 max-w-[38ch]">{hero.subheadline}</p>
+    <!-- ====================================================== HERO (VSL-first) -->
+    <section class="relative flex min-h-svh flex-col justify-center overflow-hidden pt-24 pb-12">
+      <div class="pointer-events-none absolute -right-24 -top-24 h-[26rem] w-[26rem] rounded-full bg-peach blur-3xl opacity-50"></div>
+      <div class="reveal relative mx-auto w-full max-w-3xl px-5 text-center">
+        <Eyebrow center>{brand.tagline}</Eyebrow>
+        <h1 class="display-1 hero-title mx-auto mt-5 max-w-2xl">
+          <span class="line">{hero.headline[0]}</span>
+          <span class="line">
+            {hero.headline[1]}<span class="mark-word"
+              >{hero.headline[2]}<svg viewBox="0 0 300 12" aria-hidden="true"
+                ><path d="M4 8c52-5 132-7 220-5 26 .6 52 2 74 4" /></svg
+              ></span>{hero.headline[3]}
+          </span>
+        </h1>
 
-          <ul class="mt-5 grid gap-2">
-            {
-              hero.bullets.map((b) => (
-                <li class="flex items-start gap-3">
-                  <svg class="mt-1 shrink-0 text-accent-strong" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                  <span class="text-[0.98rem] text-ink-soft">{b}</span>
-                </li>
-              ))
-            }
-          </ul>
-
-          <div class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
-            <Button class="px-7 py-3.5">{hero.cta}</Button>
-            <p class="max-w-[14rem] text-sm text-muted">{hero.subcta}</p>
-          </div>
+        <div class="mt-8">
+          <VslPlayer />
         </div>
 
-        <div class="reveal relative">
-          <div class="relative mx-auto w-full max-w-[30rem] rotate-[1.2deg] transition-transform duration-700 ease-[var(--ease-out-expo)] hover:rotate-0 lg:max-w-none">
-            <Image
-              src={heroImg}
-              alt="Mockup al unui brand de curs premium realizat de SG Design"
-              widths={[400, 700, 1000]}
-              sizes="(max-width: 1024px) 80vw, 460px"
-              class="max-h-[58svh] w-full rounded-[22px] object-cover shadow-[var(--shadow-warm-lg)] lg:max-h-[64svh]"
-            />
-          </div>
+        <!-- CTA fix sub VSL (cerință) -->
+        <div class="mt-7 flex flex-col items-center gap-3">
+          <Button class="px-8 py-4 text-lg">{hero.cta}</Button>
+          <p class="max-w-md text-sm text-muted">{vsl.microcopy}</p>
+          <p class="text-sm font-medium text-ink-soft">{vsl.trust}</p>
         </div>
       </div>
     </section>
-
-    <!-- ====================================================== VSL -->
-    <Vsl />
 
     <!-- ====================================================== LOGO MARQUEE -->
     <section class="on-dark bg-charcoal py-9 text-on-charcoal">
@@ -181,13 +154,13 @@ const pageDesc =
         <div class="mt-8 grid gap-5 sm:grid-cols-2 sm:gap-8">
           <figure class="reveal">
             <div class="reveal-img relative overflow-hidden rounded-[18px]">
-              <Image src={personBeforeImg} alt="Persoană care pare nesigură și neîngrijită, lucrând improvizat" widths={[400, 700]} sizes="(max-width:640px) 100vw, 50vw" class="aspect-[4/5] w-full object-cover" loading="lazy" />
+              <Image src={personBeforeImg} alt="Aceeași persoană, neîngrijită și fără direcție, lucrând improvizat" widths={[400, 700]} sizes="(max-width:640px) 100vw, 50vw" class="aspect-[3/4] w-full object-cover" loading="lazy" />
             </div>
             <figcaption class="mt-3 text-center font-display text-xl text-ink-soft">{agitate.personBefore}</figcaption>
           </figure>
           <figure class="reveal" style="transition-delay:110ms">
             <div class="reveal-img relative overflow-hidden rounded-[18px]">
-              <Image src={personAfterImg} alt="Profesionistă îngrijită, sigură pe ea, într-un birou elegant" widths={[400, 700]} sizes="(max-width:640px) 100vw, 50vw" class="aspect-[4/5] w-full object-cover" loading="lazy" />
+              <Image src={personAfterImg} alt="Aceeași persoană, îngrijită și profesionistă, sigură pe ea" widths={[400, 700]} sizes="(max-width:640px) 100vw, 50vw" class="aspect-[3/4] w-full object-cover" loading="lazy" />
             </div>
             <figcaption class="mt-3 text-center font-display text-xl accent-ink">{agitate.personAfter}</figcaption>
           </figure>
@@ -381,7 +354,7 @@ const pageDesc =
                   {t.tagline}
                 </p>
 
-                <div class="mt-6 flex items-end gap-2">
+                <div class="mt-5 flex items-end gap-2">
                   <span class="font-display text-4xl">{t.price}</span>
                   {t.oldPrice && <span class="pb-1 text-base text-muted line-through">{t.oldPrice}</span>}
                 </div>
@@ -389,7 +362,7 @@ const pageDesc =
                   {t.cadence}
                 </p>
 
-                <ul class="mt-6 grid flex-1 gap-3">
+                <ul class="mt-5 grid flex-1 gap-2.5">
                   {t.features.map((f) => (
                     <li class="flex items-start gap-3 text-[0.95rem]">
                       <svg class="mt-1 shrink-0 text-accent" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -401,12 +374,12 @@ const pageDesc =
                 </ul>
 
                 {t.bonus && (
-                  <p class:list={['mt-5 rounded-xl px-4 py-3 text-sm', t.featured ? 'bg-on-charcoal/10 text-on-charcoal/88' : 'bg-peach/60 text-ink-soft']}>
+                  <p class:list={['mt-4 rounded-xl px-4 py-3 text-sm', t.featured ? 'bg-on-charcoal/10 text-on-charcoal/88' : 'bg-peach/60 text-ink-soft']}>
                     {t.bonus}
                   </p>
                 )}
 
-                <div class="mt-7">
+                <div class="mt-6">
                   <Button variant={t.featured ? 'primary' : 'outline'} class="w-full">{t.cta}</Button>
                 </div>
               </article>

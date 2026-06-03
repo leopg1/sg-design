@@ -48,7 +48,7 @@ export const vsl = {
   trust: 'Lucrăm exclusiv cu autori de cursuri și programe educaționale.',
   // Pentru a activa VSL-ul: pune aici link-ul de embed (Vimeo / YouTube / Cloudflare
   // Stream). Gol = se afișează placeholder-ul, iar butonul play deschide Calendly.
-  embedUrl: '',
+  embedUrl: 'https://www.youtube.com/embed/BLWgFOiMg_c?rel=0',
 };
 
 export const identify = {
