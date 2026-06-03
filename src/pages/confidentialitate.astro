@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import { brand } from '../lib/site';
+---
+
+<Base
+  title={`Politică de Confidențialitate — ${brand.name}`}
+  description="Politica de Confidențialitate SG Design."
+>
+  <main id="main" class="mx-auto max-w-2xl px-5 py-[clamp(6rem,14vw,10rem)]">
+    <a href="/" class="link-underline text-sm">Înapoi la pagina principală</a>
+    <h1 class="display-2 mt-6">Politică de Confidențialitate</h1>
+    <p class="lede mt-5">Documentul complet este în curs de finalizare.</p>
+    <p class="mt-4 max-w-prose text-ink-soft">
+      Datele pe care ni le transmiți (de exemplu prin programarea unui apel) sunt folosite exclusiv
+      pentru a comunica cu tine despre o posibilă colaborare și nu sunt partajate cu terți în scopuri
+      de marketing. Pentru orice solicitare privind datele tale, scrie-ne la
+      <a class="link-underline" href={`mailto:${brand.email}`}>{brand.email}</a>.
+    </p>
+  </main>
+</Base>

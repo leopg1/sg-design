@@ -1,0 +1,63 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { testimonials } from '../lib/site';
+import Eyebrow from './Eyebrow.astro';
+
+const modules = import.meta.glob<{ default: ImageMetadata }>('../assets/testimonials/*.jpg', {
+  eager: true,
+});
+const byName = Object.fromEntries(
+  Object.entries(modules).map(([p, m]) => [p.split('/').pop(), m.default])
+);
+const items = testimonials.items.map((t) => ({ ...t, src: byName[t.img] }));
+const tilt = ['-1.4deg', '1.2deg', '1deg', '-1.1deg'];
+---
+
+<section id="testimoniale" class="bg-peach/55 section">
+  <div class="mx-auto max-w-5xl px-5">
+    <div class="reveal mb-10 max-w-2xl">
+      <Eyebrow>{testimonials.eyebrow}</Eyebrow>
+      <h2 class="display-2 mt-4">{testimonials.title}</h2>
+      <p class="mt-5 max-w-xl text-[0.95rem] leading-relaxed text-muted">{testimonials.note}</p>
+    </div>
+
+    <div class="testi-cols">
+      {
+        items.map((t, i) => (
+          <figure
+            class="reveal group mb-5 break-inside-avoid rounded-[16px] bg-canvas p-3 shadow-[var(--shadow-warm)] transition-transform duration-700 ease-[var(--ease-out-expo)] hover:!rotate-0"
+            style={`transform:rotate(${tilt[i % tilt.length]}); transition-delay:${(i % 2) * 80}ms`}
+          >
+            {t.src && (
+              <Image
+                src={t.src}
+                alt={`Recomandare de la ${t.name} (${t.role}) pentru SG Design`}
+                widths={[400, 700]}
+                sizes="(max-width: 640px) 100vw, 480px"
+                loading="lazy"
+                class="w-full rounded-[10px]"
+              />
+            )}
+            <figcaption class="flex items-baseline justify-between gap-3 px-2 pb-1 pt-3">
+              <span class="font-display text-lg leading-tight">{t.name}</span>
+              <span class="text-right text-xs uppercase tracking-[0.12em] text-muted">{t.role}</span>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .testi-cols {
+    column-count: 1;
+    column-gap: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .testi-cols {
+      column-count: 2;
+    }
+  }
+</style>

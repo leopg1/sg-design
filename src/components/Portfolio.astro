@@ -1,0 +1,152 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { portfolio } from '../lib/site';
+import Eyebrow from './Eyebrow.astro';
+
+const modules = import.meta.glob<{ default: ImageMetadata }>('../assets/portfolio/*.png', {
+  eager: true,
+});
+const images = Object.entries(modules)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([, m]) => m.default);
+
+// captions in the same (alphabetical) order as the files 01..08
+const meta = [
+  { title: 'Identitate de brand', cat: 'Brand & web' },
+  { title: 'Website pentru curs online', cat: 'Web' },
+  { title: 'Prezentare de curs', cat: 'Slide-uri' },
+  { title: 'Slide-uri pentru curs online', cat: 'Prezentare' },
+  { title: 'Bespoke Mastermind Club', cat: 'Afiș eveniment' },
+  { title: 'Campanie de eveniment', cat: 'Afiș' },
+  { title: 'Creative social media', cat: 'nZEBvision' },
+  { title: 'Flyer imobiliar', cat: 'REMAX' },
+];
+
+const items = images.map((src, i) => ({ src, ...(meta[i] ?? { title: 'Lucrare', cat: 'SG Design' }) }));
+---
+
+<section id="portofoliu" class="bg-canvas section">
+  <div class="mx-auto max-w-6xl px-5">
+    <div class="reveal mb-10 max-w-2xl">
+      <Eyebrow>{portfolio.eyebrow}</Eyebrow>
+      <h2 class="display-2 mt-4">{portfolio.title}</h2>
+      <p class="lede mt-5">{portfolio.subtitle}</p>
+    </div>
+
+    <div class="masonry">
+      {
+        items.map((item) => (
+          <figure class="pf-item reveal-img group mb-5 break-inside-avoid overflow-hidden rounded-[18px] bg-surface shadow-[var(--shadow-warm-sm)]">
+            <div class="pf-frame relative overflow-hidden">
+              <Image
+                src={item.src}
+                alt={`${item.title} — ${item.cat}, realizat de SG Design`}
+                widths={[400, 700, 1000]}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                loading="lazy"
+                class="pf-img w-full"
+              />
+              <figcaption
+                class="pointer-events-none absolute inset-x-0 bottom-0 translate-y-2 p-5 opacity-0 transition-all duration-500 ease-[var(--ease-out-expo)] group-hover:translate-y-0 group-hover:opacity-100"
+                style="background:linear-gradient(to top, oklch(0.22 0.012 350 / 0.86), oklch(0.22 0.012 350 / 0) )"
+              >
+                <span class="block text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-accent">
+                  {item.cat}
+                </span>
+                <span class="mt-1 block font-display text-xl text-on-charcoal">{item.title}</span>
+              </figcaption>
+            </div>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .masonry {
+    column-count: 1;
+    column-gap: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .masonry { column-count: 2; }
+  }
+  @media (min-width: 1024px) {
+    .masonry { column-count: 3; }
+  }
+
+  /* Entrance (clip-path wipe) + hover lift/tilt share the figure's transition */
+  .pf-item {
+    transition:
+      clip-path 1.05s var(--ease-out-expo),
+      transform 0.45s var(--ease-out-expo),
+      box-shadow 0.45s ease;
+    transform-origin: center;
+  }
+  @media (pointer: fine) {
+    .pf-item {
+      transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))
+        translateY(var(--lift, 0px));
+    }
+    .pf-item:hover {
+      --lift: -6px;
+      box-shadow: var(--shadow-warm);
+    }
+  }
+
+  /* Image: scale-settle on reveal, gentle zoom on hover */
+  .pf-img {
+    transform: scale(var(--z, 1));
+    transition: transform 0.8s var(--ease-out-expo);
+    will-change: transform;
+  }
+  :global(.has-js) .reveal-img:not(.is-visible) .pf-img {
+    --z: 1.07;
+  }
+  @media (pointer: fine) {
+    .pf-item:hover .pf-img {
+      --z: 1.05;
+      transition-duration: 0.6s;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pf-item {
+      transform: none !important;
+      transition: none;
+    }
+    .pf-img {
+      --z: 1 !important;
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  // Cursor-follow 3D tilt (subtle, desktop pointers only, reduced-motion safe)
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = window.matchMedia('(pointer: fine)').matches;
+  if (!reduce && fine) {
+    const MAX = 5; // degrees
+    document.querySelectorAll('.pf-item').forEach((item) => {
+      const el = item as HTMLElement;
+      let raf = 0;
+      el.addEventListener('mousemove', (e) => {
+        const r = el.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          raf = 0;
+          el.style.setProperty('--ry', (px * MAX).toFixed(2) + 'deg');
+          el.style.setProperty('--rx', (-py * MAX).toFixed(2) + 'deg');
+        });
+      });
+      el.addEventListener('mouseleave', () => {
+        el.style.setProperty('--rx', '0deg');
+        el.style.setProperty('--ry', '0deg');
+      });
+    });
+  }
+</script>

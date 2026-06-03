@@ -1,0 +1,45 @@
+---
+import { CALENDLY_URL } from '../lib/site';
+
+interface Props {
+  variant?: 'primary' | 'outline';
+  href?: string;
+  calendly?: boolean;
+  class?: string;
+  arrow?: boolean;
+}
+
+const {
+  variant = 'primary',
+  href,
+  calendly = true,
+  class: cls = '',
+  arrow = true,
+} = Astro.props;
+
+const target = calendly ? CALENDLY_URL : href ?? '#';
+const isExternal = calendly || /^https?:/.test(target);
+---
+
+<a
+  href={target}
+  class:list={['btn', variant === 'outline' && 'btn--outline', cls]}
+  data-calendly={calendly ? '' : undefined}
+  target={isExternal ? '_blank' : undefined}
+  rel={isExternal ? 'noopener noreferrer' : undefined}
+>
+  <span><slot /></span>
+  {
+    arrow && (
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path
+          d="M5 12h13M12 5l7 7-7 7"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    )
+  }
+</a>

@@ -1,0 +1,12 @@
+---
+interface Props {
+  center?: boolean;
+  dark?: boolean;
+  class?: string;
+}
+const { center = false, dark = false, class: cls = '' } = Astro.props;
+---
+
+<span class:list={['eyebrow', center && 'eyebrow--center', dark && 'eyebrow--dark', cls]}>
+  <slot />
+</span>

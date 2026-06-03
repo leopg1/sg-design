@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import { brand } from '../lib/site';
+---
+
+<Base title={`Termeni și Condiții — ${brand.name}`} description="Termeni și Condiții SG Design.">
+  <main id="main" class="mx-auto max-w-2xl px-5 py-[clamp(6rem,14vw,10rem)]">
+    <a href="/" class="link-underline text-sm">Înapoi la pagina principală</a>
+    <h1 class="display-2 mt-6">Termeni și Condiții</h1>
+    <p class="lede mt-5">Documentul complet este în curs de finalizare.</p>
+    <p class="mt-4 max-w-prose text-ink-soft">
+      Până la publicarea variantei finale, pentru orice întrebare legată de colaborare, livrabile,
+      revizii sau condiții de plată, ne poți scrie la
+      <a class="link-underline" href={`mailto:${brand.email}`}>{brand.email}</a> sau poți programa un
+      apel de consultanță.
+    </p>
+  </main>
+</Base>

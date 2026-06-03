@@ -1,0 +1,13 @@
+---
+// Signature apricot ink stroke. Draws itself on scroll (see global.css .ink-path).
+interface Props {
+  flip?: boolean;
+}
+const { flip = false } = Astro.props;
+---
+
+<div class="ink-divider reveal" aria-hidden="true">
+  <svg viewBox="0 0 600 36" preserveAspectRatio="xMidYMid meet" class={flip ? 'flip' : undefined}>
+    <path class="ink-path" pathLength="1" d="M6 22 C 120 6, 250 30, 352 17 S 506 6, 594 20" />
+  </svg>
+</div>
