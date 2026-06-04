@@ -26,7 +26,6 @@ import {
   contrast,
   solution,
   outcomes,
-  process,
   packages,
   usp,
   faq,
@@ -44,8 +43,9 @@ const pageDesc =
   <!-- ====================================================== NAV -->
   <header
     data-header
-    class="fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-[var(--ease-out-expo)]"
+    class="fixed inset-x-0 top-0 z-50 overflow-hidden transition-all duration-500 ease-[var(--ease-out-expo)]"
   >
+    <span class="header-flow pointer-events-none absolute inset-0 -z-10" aria-hidden="true"></span>
     <nav class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3 sm:py-3.5">
       <a href="#top" class="relative z-[60] flex items-center" aria-label={`${brand.name} acasă`}>
         <Image src={logoSg} alt={brand.name} height={56} class="block h-11 w-auto sm:h-12" />
@@ -79,9 +79,10 @@ const pageDesc =
 
     <!-- ====================================================== HERO (VSL-first) -->
     <section class="relative flex min-h-svh flex-col justify-center overflow-hidden pt-24 pb-12">
-      <div class="pointer-events-none absolute -right-24 -top-24 h-[26rem] w-[26rem] rounded-full bg-peach blur-3xl opacity-50"></div>
+      <div data-studio-light="1.4" class="studio-light pointer-events-none absolute -right-32 -top-40 h-[40rem] w-[40rem] rounded-full bg-accent/25 blur-[120px]"></div>
+      <div data-studio-light="-0.9" class="studio-light pointer-events-none absolute -left-40 top-1/3 h-[32rem] w-[32rem] rounded-full bg-accent/10 blur-[120px]" style="animation-delay:-2.6s"></div>
       <div class="reveal relative mx-auto w-full max-w-3xl px-5 text-center">
-        <Eyebrow center>{brand.tagline}</Eyebrow>
+        <Eyebrow center>Studio de identitate vizuală</Eyebrow>
         <h1 class="display-1 hero-title mx-auto mt-5 max-w-2xl">
           <span class="line">{hero.headline[0]}</span>
           <span class="line">
@@ -122,17 +123,21 @@ const pageDesc =
         </div>
         <div class="reveal">
           <p class="lede measure">{identify.intro}</p>
-          <ul class="mt-7 grid gap-px overflow-hidden rounded-2xl border border-line">
+          <ul class="mt-8 grid">
             {
-              identify.points.map((p) => (
-                <li class="flex items-center gap-4 border-b border-line bg-surface px-5 py-4 last:border-0">
-                  <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-accent"></span>
+              identify.points.map((p, i) => (
+                <li
+                  data-reveal-child
+                  class="reveal flex items-baseline gap-4 border-t border-line py-4 text-lg leading-snug text-ink-soft last:border-b"
+                  style={`transition-delay:${i * 60}ms`}
+                >
+                  <span class="mt-[0.62em] h-px w-5 shrink-0 bg-accent"></span>
                   <span>{p}</span>
                 </li>
               ))
             }
           </ul>
-          <p class="mt-7 font-display text-2xl leading-snug">{identify.punch}</p>
+          <p class="mt-9 font-display text-[clamp(1.4rem,2.4vw,1.85rem)] font-semibold leading-snug text-ink">{identify.punch}</p>
         </div>
       </div>
     </section>
@@ -172,13 +177,21 @@ const pageDesc =
 
         <!-- Row 2: materials (perception online) -->
         <div class="mt-8 grid gap-5 sm:grid-cols-2 sm:gap-8">
-          <figure class="reveal-img group relative overflow-hidden rounded-[18px]">
-            <Image src={oldSiteImg} alt="Site aglomerat, multicolor, fără identitate vizuală coerentă" widths={[500, 900]} sizes="(max-width:640px) 100vw, 50vw" class="aspect-[16/11] w-full object-cover transition-transform duration-[900ms] ease-[var(--ease-out-expo)] group-hover:scale-[1.03]" loading="lazy" />
-            <span class="absolute left-4 top-4 rounded-full bg-canvas/85 px-3 py-1 text-xs font-semibold text-ink-soft">{agitate.beforeLabel}</span>
+          <figure class="reveal-img group overflow-hidden rounded-[18px]">
+            <div class="relative overflow-hidden">
+              <Image src={oldSiteImg} alt="Site aglomerat, multicolor, fără identitate vizuală coerentă" widths={[500, 900]} sizes="(max-width:640px) 100vw, 50vw" class="aspect-[16/11] w-full object-cover transition-transform duration-[900ms] ease-[var(--ease-out-expo)] group-hover:scale-[1.03]" loading="lazy" />
+            </div>
+            <figcaption class="flex items-center gap-2 bg-surface px-4 py-2.5 text-xs font-semibold uppercase tracking-[0.08em] text-muted">
+              <span class="h-1.5 w-1.5 rounded-full bg-muted"></span>{agitate.beforeLabel}
+            </figcaption>
           </figure>
-          <figure class="reveal-img group relative overflow-hidden rounded-[18px]" style="transition-delay:110ms">
-            <Image src={afterImg} alt="Site premium, clar și coerent, care inspiră încredere" widths={[500, 900]} sizes="(max-width:640px) 100vw, 50vw" class="aspect-[16/11] w-full object-cover transition-transform duration-[900ms] ease-[var(--ease-out-expo)] group-hover:scale-[1.03]" loading="lazy" />
-            <span class="absolute left-4 top-4 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-ink">{agitate.afterLabel}</span>
+          <figure class="reveal-img group overflow-hidden rounded-[18px]" style="transition-delay:110ms">
+            <div class="relative overflow-hidden">
+              <Image src={afterImg} alt="Site premium, clar și coerent, care inspiră încredere" widths={[500, 900]} sizes="(max-width:640px) 100vw, 50vw" class="aspect-[16/11] w-full object-cover transition-transform duration-[900ms] ease-[var(--ease-out-expo)] group-hover:scale-[1.03]" loading="lazy" />
+            </div>
+            <figcaption class="flex items-center gap-2 bg-accent px-4 py-2.5 text-xs font-semibold uppercase tracking-[0.08em] text-[oklch(0.99_0.001_285)]">
+              <span class="h-1.5 w-1.5 rounded-full bg-[oklch(0.99_0.001_285)]"></span>{agitate.afterLabel}
+            </figcaption>
           </figure>
         </div>
 
@@ -193,7 +206,7 @@ const pageDesc =
           }
         </div>
 
-        <p class="reveal mx-auto mt-12 max-w-3xl text-center font-display text-[clamp(1.5rem,3.4vw,2.4rem)] leading-tight">
+        <p class="reveal mx-auto mt-12 max-w-3xl text-center font-display text-[clamp(1.5rem,3.4vw,2.4rem)] leading-[1.3]">
           {agitate.punch}
         </p>
       </div>
@@ -210,7 +223,7 @@ const pageDesc =
         <div class="reveal relative mt-14 grid gap-10 md:grid-cols-2 md:gap-16">
           <!-- vertical divider that draws on scroll (desktop) -->
           <svg class="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 md:block" preserveAspectRatio="none" viewBox="0 0 1 100" aria-hidden="true">
-            <line x1="0.5" y1="0" x2="0.5" y2="100" pathLength="1" class="draw-line" stroke="oklch(0.96 0.01 75 / 0.25)" stroke-width="1" />
+            <line x1="0.5" y1="0" x2="0.5" y2="100" pathLength="1" class="draw-line" stroke="oklch(0.97 0.002 285 / 0.18)" stroke-width="1" />
           </svg>
 
           <div class="md:pr-4">
@@ -250,73 +263,61 @@ const pageDesc =
       </div>
     </section>
 
-    <!-- ====================================================== SOLUTION -->
-    <section class="bg-peach/55 section-lg">
-      <div class="mx-auto max-w-4xl px-5 text-center">
+    <!-- ====================================================== SOLUTION (lit block) -->
+    <section class="solution-block section-lg relative overflow-hidden">
+      <div class="relative mx-auto max-w-4xl px-5 text-center">
         <div class="reveal">
           <Eyebrow center>{solution.eyebrow}</Eyebrow>
           <h2 class="mt-5 font-display text-[clamp(2rem,5vw,3.6rem)] leading-[1.08]">{solution.title}</h2>
           <p class="lede mx-auto mt-7 max-w-2xl">{solution.body}</p>
-          <p class="mt-8 text-sm uppercase tracking-[0.14em] text-muted">{solution.signature}</p>
+          <p class="mt-8 text-sm uppercase tracking-[0.14em] text-accent-strong">{solution.signature}</p>
         </div>
       </div>
     </section>
 
     <InkDivider />
 
-    <!-- ====================================================== OUTCOMES -->
-    <section class="section">
-      <div class="mx-auto max-w-6xl px-5">
-        <div class="reveal mb-10 max-w-2xl">
-          <Eyebrow>{outcomes.eyebrow}</Eyebrow>
-          <h2 class="display-2 mt-4">{outcomes.title}</h2>
-        </div>
-        <ol class="reveal grid gap-x-12 gap-y-0 sm:grid-cols-2">
-          {
-            outcomes.items.map((o, i) => (
-              <li
-                data-reveal-child
-                class="reveal flex gap-5 border-t border-line py-6"
-                style={`transition-delay:${i * 60}ms`}
-              >
-                <span class="font-display text-2xl leading-none text-accent-strong">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <div>
-                  <h3 class="font-display text-xl">{o.t}</h3>
-                  <p class="mt-1.5 text-ink-soft">{o.d}</p>
-                </div>
-              </li>
-            ))
-          }
-        </ol>
-      </div>
-    </section>
-
     <!-- ====================================================== PORTFOLIO -->
     <Portfolio />
 
-    <!-- ====================================================== PROCESS -->
-    <section class="bg-surface section">
+    <!-- ====================================================== OUTCOMES -->
+    <section class="section-tight">
       <div class="mx-auto max-w-6xl px-5">
-        <div class="reveal mb-10 max-w-2xl">
-          <Eyebrow>{process.eyebrow}</Eyebrow>
-          <h2 class="display-2 mt-4">{process.title}</h2>
+        <div class="grid gap-x-16 gap-y-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+          <!-- left: section header (the single dominant title) -->
+          <div class="reveal max-w-md">
+            <Eyebrow>{outcomes.eyebrow}</Eyebrow>
+            <h2 class="display-2 mt-4">{outcomes.title}</h2>
+          </div>
+
+          <!-- right: the anchor outcome, framed as a lead-in, not a rival headline -->
+          <div class="reveal lg:border-l lg:border-line lg:pl-10" style="transition-delay:90ms">
+            <p class="text-xs font-semibold uppercase tracking-[0.14em] text-accent-strong">Primul lucru pe care îl simți</p>
+            <p class="mt-4 font-display text-[clamp(1.4rem,2.2vw,1.85rem)] font-semibold leading-snug text-ink">
+              {outcomes.items[0].t}.
+            </p>
+            <p class="mt-2 max-w-md text-ink-soft">{outcomes.items[0].d}</p>
+          </div>
         </div>
-        <ol class="reveal relative grid gap-y-10 md:grid-cols-4 md:gap-x-8">
-          <span class="process-line absolute left-0 top-[1.45rem] hidden h-px w-full origin-left bg-line-strong md:block"></span>
+
+        <!-- the rest: a tight, asymmetric editorial list, no decorative numbers -->
+        <ul class="reveal mt-12 grid border-t border-line-strong sm:grid-cols-2 sm:gap-x-16">
           {
-            process.steps.map((s) => (
-              <li data-reveal-child class="reveal relative">
-                <span class="relative z-10 grid h-12 w-12 place-items-center rounded-full bg-canvas font-display text-lg shadow-[var(--shadow-warm-sm)] ring-1 ring-line">
-                  {s.n}
+            outcomes.items.slice(1).map((o, i) => (
+              <li
+                data-reveal-child
+                class="reveal group flex items-baseline gap-4 border-b border-line py-[1.15rem] last:border-b-0 sm:[&:nth-last-child(2)]:border-b-0"
+                style={`transition-delay:${i * 55}ms`}
+              >
+                <span class="mt-[0.5em] h-px w-6 shrink-0 bg-accent-strong transition-[width] duration-500 ease-[var(--ease-out-expo)] group-hover:w-9"></span>
+                <span class="flex-1">
+                  <span class="font-display text-lg leading-snug">{o.t}.</span>
+                  <span class="text-ink-soft"> {o.d}</span>
                 </span>
-                <h3 class="mt-5 font-display text-xl">{s.t}</h3>
-                <p class="mt-2 text-ink-soft">{s.d}</p>
               </li>
             ))
           }
-        </ol>
+        </ul>
       </div>
     </section>
 
@@ -335,51 +336,52 @@ const pageDesc =
               <article
                 data-reveal-child
                 class:list={[
-                  'reveal flex flex-col rounded-[22px] p-7 transition-transform duration-500 ease-[var(--ease-out-expo)] hover:-translate-y-1.5',
+                  'reveal flex flex-col rounded-[10px] p-7 transition-transform duration-500 ease-[var(--ease-out-expo)] hover:-translate-y-1.5',
                   t.featured
-                    ? 'on-dark bg-charcoal text-on-charcoal shadow-[var(--shadow-warm-lg)] lg:-mt-4 lg:mb-[-1rem]'
-                    : 'bg-canvas ring-1 ring-line shadow-[var(--shadow-warm-sm)]',
+                    ? 'pkg-featured text-ink lg:-mt-4 lg:mb-[-1rem]'
+                    : 'bg-surface ring-1 ring-line shadow-[var(--shadow-warm-sm)] hover:ring-accent/60',
                 ]}
                 style={`transition-delay:${i * 80}ms`}
               >
                 <div class="flex items-center justify-between gap-3">
                   <h3 class="font-display text-2xl">{t.name}</h3>
                   {t.badge && (
-                    <span class="rounded-full bg-accent px-3 py-1 text-xs font-semibold uppercase tracking-[0.1em] text-ink">
+                    <span class="rounded-full bg-accent px-3 py-1 text-xs font-semibold uppercase tracking-[0.1em] text-[oklch(0.99_0.001_285)]">
                       {t.badge}
                     </span>
                   )}
                 </div>
-                <p class:list={['mt-1 text-sm', t.featured ? 'text-on-charcoal/82' : 'text-muted']}>
+                <p class:list={['mt-1 text-sm', t.featured ? 'text-ink-soft' : 'text-muted']}>
                   {t.tagline}
                 </p>
 
                 <div class="mt-5 flex items-end gap-2">
-                  <span class="font-display text-4xl">{t.price}</span>
+                  <span class:list={['font-display text-4xl', t.featured && 'text-accent-strong']}>{t.price}</span>
                   {t.oldPrice && <span class="pb-1 text-base text-muted line-through">{t.oldPrice}</span>}
                 </div>
-                <p class:list={['text-xs uppercase tracking-[0.12em]', t.featured ? 'text-on-charcoal/68' : 'text-muted']}>
+                <p class:list={['text-xs uppercase tracking-[0.12em]', t.featured ? 'text-ink-soft' : 'text-muted']}>
                   {t.cadence}
                 </p>
 
-                <ul class="mt-5 grid flex-1 gap-2.5">
+                {/* features sit tight together; the empty space is pushed below via mt-auto on the CTA */}
+                <ul class="mt-6 grid gap-3">
                   {t.features.map((f) => (
                     <li class="flex items-start gap-3 text-[0.95rem]">
-                      <svg class="mt-1 shrink-0 text-accent" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <svg class:list={['mt-0.5 shrink-0', t.featured ? 'text-accent-strong' : 'text-accent']} width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
                       </svg>
-                      <span class:list={[t.featured ? 'text-on-charcoal/90' : 'text-ink-soft']}>{f}</span>
+                      <span class:list={[t.featured ? 'text-ink' : 'text-ink-soft']}>{f}</span>
                     </li>
                   ))}
                 </ul>
 
                 {t.bonus && (
-                  <p class:list={['mt-4 rounded-xl px-4 py-3 text-sm', t.featured ? 'bg-on-charcoal/10 text-on-charcoal/88' : 'bg-peach/60 text-ink-soft']}>
+                  <p class:list={['mt-4 rounded-[8px] px-4 py-3 text-sm', t.featured ? 'bg-accent/12 text-ink-soft' : 'bg-surface-2 text-ink-soft']}>
                     {t.bonus}
                   </p>
                 )}
 
-                <div class="mt-6">
+                <div class="mt-auto pt-7">
                   <Button variant={t.featured ? 'primary' : 'outline'} class="w-full">{t.cta}</Button>
                 </div>
               </article>
@@ -454,7 +456,7 @@ const pageDesc =
     <!-- ====================================================== URGENCY -->
     <section class="on-dark bg-charcoal-soft section text-on-charcoal">
       <div class="reveal mx-auto max-w-3xl px-5 text-center">
-        <span class="mb-6 inline-flex items-center gap-2.5 rounded-full border border-[oklch(0.96_0.01_75/0.16)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-on-charcoal/88">
+        <span class="mb-6 inline-flex items-center gap-2.5 rounded-full border border-[oklch(0.97_0.002_285/0.16)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-on-charcoal/88">
           <span class="relative flex h-2.5 w-2.5" aria-hidden="true">
             <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60"></span>
             <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-accent"></span>
@@ -659,17 +661,5 @@ const pageDesc =
   }
   .nav-burger[data-open] span:last-child {
     transform: translateY(-3.5px) rotate(-45deg);
-  }
-
-  /* Process connector line draws on reveal */
-  .process-line {
-    transition: transform 1.3s var(--ease-out-expo);
-  }
-  :global(.has-js) .process-line {
-    transform: scaleX(0);
-  }
-  .reveal.is-visible .process-line,
-  .is-visible .process-line {
-    transform: scaleX(1);
   }
 </style>

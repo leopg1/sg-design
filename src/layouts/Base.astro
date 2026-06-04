@@ -32,7 +32,7 @@ const jsonLd = {
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ro_RO" />
-    <meta name="theme-color" content="#fbf6ee" />
+    <meta name="theme-color" content="#16161a" />
     <script is:inline>
       // Confirm JS is active before paint so reveal-hidden states apply without
       // a flash. Failsafe: if the reveal engine never runs (e.g. script fails),
@@ -137,6 +137,40 @@ const jsonLd = {
             btn.style.transform = '';
           });
         });
+      }
+
+      // ---- Hero studio light: drifts toward the cursor (desktop only) ------
+      if (!reduce && window.matchMedia('(pointer: fine)').matches) {
+        const lights = Array.from(document.querySelectorAll('[data-studio-light]'));
+        if (lights.length) {
+          lights.forEach((el) => el.classList.add('studio-light--cursor'));
+          const hero = lights[0].closest('section');
+          let inView = true;
+          if (hero && 'IntersectionObserver' in window) {
+            new IntersectionObserver(
+              ([e]) => { inView = e.isIntersecting; },
+              { threshold: 0 }
+            ).observe(hero);
+          }
+          let raf = 0;
+          window.addEventListener(
+            'pointermove',
+            (e) => {
+              if (!inView || raf) return;
+              raf = requestAnimationFrame(() => {
+                raf = 0;
+                const dx = e.clientX / window.innerWidth - 0.5;
+                const dy = e.clientY / window.innerHeight - 0.5;
+                lights.forEach((el) => {
+                  const f = parseFloat(el.getAttribute('data-studio-light')) || 1;
+                  el.style.setProperty('--lx', (dx * 40 * f).toFixed(1) + 'px');
+                  el.style.setProperty('--ly', (dy * 40 * f).toFixed(1) + 'px');
+                });
+              });
+            },
+            { passive: true }
+          );
+        }
       }
 
       // ---- Mobile nav ------------------------------------------------------

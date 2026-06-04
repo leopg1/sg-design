@@ -42,7 +42,7 @@ export const hero = {
 
 export const vsl = {
   eyebrow: 'Mesaj de la Georgiana',
-  title: 'Două minute care îți pot schimba poziționarea',
+  title: 'Ce-ți spun în două minute, înainte să ne auzim',
   cta: 'Vreau brand premium',
   microcopy: 'Fără bătăi de cap. Modificări nelimitate. Adaptat exact pe business-ul tău.',
   trust: 'Lucrăm exclusiv cu autori de cursuri și programe educaționale.',
@@ -54,15 +54,15 @@ export const vsl = {
 export const identify = {
   eyebrow: 'Recunoști asta?',
   title: 'Dacă treci prin asta, ești exact unde trebuie.',
-  intro: 'Ai un curs bun. Știi că aduci valoare. Dar ceva nu se leagă.',
+  intro: 'Ai un program bun, ai lucrat la el, ai pus suflet. Dar când oamenii ajung la tine, nu se simte.',
   points: [
-    'Oamenii nu îți percep valoarea reală.',
-    'Ai luni în care vânzările scad fără un motiv clar.',
-    'Te simți încă una din piața aglomerată.',
-    'Îți e greu să ceri prețul pe care îl meriți.',
+    'Nu te tratează la nivelul la care știi că ești.',
+    'Întreabă de preț prea devreme, apoi dispar.',
+    'Inventează scuze ca să nu cumpere.',
+    'Începi să te îndoiești: „oare cer prea mult?”',
     'Stai prea mult în Canva și tot nu iese ce trebuie.',
   ],
-  punch: 'Și poate cel mai frustrant: știi că meriți mai mult, dar oamenii nu percep asta.',
+  punch: 'Dar nu asta e problema. Oamenii nu cumpără ce nu înțeleg și nu respectă. Iar respectul vine din cum te prezinți.',
 };
 
 export const agitate = {
@@ -237,11 +237,27 @@ export const faq = {
     },
     {
       q: 'Dacă nu funcționează?',
-      a: 'Nu cumperi design. Cumperi poziționare. Asta schimbă jocul.',
+      a: 'Nu cumpăra design. Cumpără poziționare. Asta schimbă jocul.',
     },
     {
       q: 'Cât durează?',
-      a: 'Execuția durează între 2 și 6 săptămâni. Îți transmitem timeline-ul exact de la început și găsim soluții să urgentăm dacă ai nevoie.',
+      a: 'Lucrăm eficient, dar fără grabă, calitatea cere timp. Execuția durează între 2 și 6 săptămâni. Îți transmitem timeline-ul exact de la început și urgentăm dacă ai nevoie.',
+    },
+    {
+      q: 'Eu lucram deja în Canva. De ce aș plăti pentru asta?',
+      a: 'Canva îți dă un material. Noi îți dăm un sistem coerent pe care îl folosești peste tot, fără să mai improvizezi de fiecare dată. Diferența se vede în cât de serios ești tratat.',
+    },
+    {
+      q: 'Trebuie să-ți trimit eu texte și idei?',
+      a: 'Ne dai direcția și ce ai deja, restul ducem noi. La prezentări vii doar cu textul, structura și designul le facem împreună.',
+    },
+    {
+      q: 'Ce primesc, mai exact, la final?',
+      a: 'Fișierele finale în png, pdf și format editabil, plus brandbook cu reguli de folosire. Le poți da oricărui colaborator fără să depinzi de noi.',
+    },
+    {
+      q: 'Și dacă nu sunt autor de cursuri?',
+      a: 'Atunci probabil nu suntem potriviți. Lucrăm exclusiv cu autori de cursuri și programe educaționale, tocmai ca să știm exact ce funcționează în nișa ta.',
     },
   ],
 };
@@ -259,7 +275,7 @@ export const finalCta = {
   eyebrow: 'Următorul pas',
   title: 'Dacă simți că e momentul să arăți la nivelul tău real',
   body:
-    'Programează un apel gratuit de consultanță 1-la-1 cu Georgiana. O conversație de 30 de minute în care înțelegem unde e blocajul, clarificăm direcția și vezi dacă are sens să lucrăm împreună. Fără presiune. Fără pitch forțat. Te ofertăm doar dacă te putem ajuta.',
+    'Nu mai încerca să faci să meargă cu improvizații. Programează un apel gratuit 1-la-1 cu Georgiana, o conversație de 30 de minute în care înțelegem unde e blocajul, clarificăm direcția și vezi dacă are sens să lucrăm împreună. Fără presiune. Fără pitch forțat. Te ofertăm doar dacă te putem ajuta.',
   cta: 'Rezervă-ți locul',
   guarantees: [
     'Direcție clară înainte de execuție',

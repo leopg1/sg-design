@@ -11,7 +11,7 @@ const images = Object.entries(modules)
   .sort(([a], [b]) => a.localeCompare(b))
   .map(([, m]) => m.default);
 
-// captions in the same (alphabetical) order as the files 01..08
+// captions in the same (alphabetical) order as the files 01..13
 const meta = [
   { title: 'Identitate de brand', cat: 'Brand & web' },
   { title: 'Website pentru curs online', cat: 'Web' },
@@ -19,8 +19,12 @@ const meta = [
   { title: 'Slide-uri pentru curs online', cat: 'Prezentare' },
   { title: 'Bespoke Mastermind Club', cat: 'Afiș eveniment' },
   { title: 'Campanie de eveniment', cat: 'Afiș' },
-  { title: 'Creative social media', cat: 'nZEBvision' },
   { title: 'Flyer imobiliar', cat: 'REMAX' },
+  { title: 'Afiș produs', cat: 'nZEBvision' },
+  { title: 'Campanie „Start în BAC”', cat: 'Afiș educațional' },
+  { title: 'Identitate „re.fresh”', cat: 'Brand' },
+  { title: 'Brand book complet', cat: 'Identitate vizuală' },
+  { title: 'Afiș eveniment adopție', cat: 'Afiș' },
 ];
 
 const items = images.map((src, i) => ({ src, ...(meta[i] ?? { title: 'Lucrare', cat: 'SG Design' }) }));
@@ -49,7 +53,7 @@ const items = images.map((src, i) => ({ src, ...(meta[i] ?? { title: 'Lucrare', 
               />
               <figcaption
                 class="pointer-events-none absolute inset-x-0 bottom-0 translate-y-2 p-5 opacity-0 transition-all duration-500 ease-[var(--ease-out-expo)] group-hover:translate-y-0 group-hover:opacity-100"
-                style="background:linear-gradient(to top, oklch(0.22 0.012 350 / 0.86), oklch(0.22 0.012 350 / 0) )"
+                style="background:linear-gradient(to top, oklch(0.09 0.004 285 / 0.94), oklch(0.09 0.004 285 / 0) )"
               >
                 <span class="block text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-accent">
                   {item.cat}

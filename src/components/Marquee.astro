@@ -2,27 +2,39 @@
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 
-const modules = import.meta.glob<{ default: ImageMetadata }>('../assets/logos/*.png', {
+// Explicit, ordered logo set (no glob) so we control order and avoid duplicates.
+// Each entry is normalized into a uniform cell below, so wide and tall marks
+// occupy equal space, fixing the "some huge, some tiny" asymmetry.
+const files = import.meta.glob<{ default: ImageMetadata }>('../assets/logos/*.png', {
   eager: true,
 });
-const logos = Object.values(modules).map((m) => m.default);
-// Build one "half" wide enough to fill the viewport, then duplicate it so the
-// -50% translate loops seamlessly and the strip never looks empty on desktop.
-const half = [...logos, ...logos, ...logos];
-const loop = [...half, ...half];
+const pick = (name: string) => files[`../assets/logos/${name}`].default;
+
+const logos: { src: ImageMetadata; alt: string }[] = [
+  { src: pick('alo-romania.png'), alt: 'Alo România' },
+  { src: pick('alo-iasi.png'), alt: 'Alo Iași' },
+  { src: pick('nzebvision.png'), alt: 'nZEBvision' },
+  { src: pick('impact-mastery.png'), alt: 'Impact Mastery' },
+  { src: pick('mdpal.png'), alt: 'MdPal' },
+  { src: pick('cafenea.png'), alt: 'Cafenea' },
+  { src: pick('ewm.png'), alt: 'EWM' },
+  { src: pick('cta.png'), alt: 'CTA' },
+  { src: pick('strategik.png'), alt: 'Strategik' },
+  { src: pick('sg-symbol.png'), alt: 'SG Design' },
+];
+
+// Duplicate the set enough times that the -50% translate loops seamlessly and
+// the strip is never empty on wide viewports.
+const loop = [...logos, ...logos, ...logos, ...logos];
 ---
 
 <div class="logo-strip overflow-hidden py-3" aria-label="Branduri cu care am lucrat">
   <div class="marquee items-center">
     {
-      loop.map((src) => (
-        <Image
-          src={src}
-          alt=""
-          height={64}
-          loading="lazy"
-          class="h-11 w-auto shrink-0 opacity-60 transition-all duration-500 ease-[var(--ease-out-expo)] hover:scale-105 hover:opacity-100 sm:h-14"
-        />
+      loop.map(({ src, alt }, i) => (
+        <span class="logo-cell" role="img" aria-label={i < logos.length ? alt : undefined} aria-hidden={i >= logos.length ? 'true' : undefined}>
+          <Image src={src} alt="" height={120} loading="lazy" class="logo-img" />
+        </span>
       ))
     }
   </div>
@@ -39,8 +51,43 @@ const loop = [...half, ...half];
     );
     mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
   }
-  .logo-strip :global(img) {
-    /* logos are white-on-transparent: keep them on the charcoal strip */
+
+  /* Uniform cell: every brand occupies the same box, regardless of its native
+     aspect ratio. The logo is scaled to fit inside (contain), centered. This is
+     what makes wide and tall marks read at an even, symmetric size. */
+  .logo-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    /* Uniform cell width. Logos sit centered inside, scaled to a shared height,
+       with a width cap so very wide marks (Impact Mastery, MdPal) don't outgrow
+       compact ones (Alo). Equal optical mass across all brands. */
+    width: clamp(9rem, 15vw, 12rem);
+    height: 3.5rem;
+    opacity: 0.6;
+    transition:
+      opacity 0.5s var(--ease-out-expo),
+      transform 0.5s var(--ease-out-expo);
+  }
+  .logo-cell:hover {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  .logo-cell :global(.logo-img) {
+    /* Scale to the shared cell height first; the width cap then reins in only
+       the extremely wide logos so nothing dominates the strip. */
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    /* logos arrive in mixed colors; normalize all to white on the dark strip */
     filter: brightness(0) invert(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo-cell {
+      transition: none;
+    }
   }
 </style>

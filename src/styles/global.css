@@ -1,39 +1,52 @@
 /* Fonts (self-hosted via fontsource) */
-@import '@fontsource/gloock/400.css';
 @import '@fontsource-variable/hanken-grotesk';
 
 @import 'tailwindcss';
 
 /* ----------------------------------------------------------------------------
-   SG Design — design tokens (see DESIGN.md)
-   Color strategy: Committed. Apricot is the load-bearing accent, charcoal
-   grounds, ivory breathes. Every neutral tinted warm. No pure #000 / #fff.
+   SG Design — design tokens — "Xable Dark" re-skin
+   Color strategy: Drenched dark. Graphite is the dominant surface, a corporate
+   red is the load-bearing accent, light type breathes. Tinted toward the red
+   hue (~25). No pure #000 / #fff. Single sans family (Hanken Grotesk).
+   Note: this overrides the warm-ivory DESIGN.md per explicit client direction.
 ---------------------------------------------------------------------------- */
 @theme {
-  --color-canvas: oklch(0.985 0.008 75);
-  --color-surface: oklch(0.975 0.012 70);
-  --color-peach: oklch(0.95 0.03 60);
-  --color-ink: oklch(0.27 0.012 350);
-  --color-ink-soft: oklch(0.42 0.012 350);
-  --color-muted: oklch(0.58 0.01 350);
-  --color-accent: oklch(0.79 0.12 57);
-  --color-accent-soft: oklch(0.88 0.07 60);
-  --color-accent-strong: oklch(0.62 0.15 45);
-  --color-charcoal: oklch(0.24 0.012 350);
-  --color-charcoal-soft: oklch(0.31 0.012 350);
-  --color-on-charcoal: oklch(0.96 0.01 75);
-  --color-line: oklch(0.27 0.012 350 / 0.12);
-  --color-line-strong: oklch(0.27 0.012 350 / 0.22);
+  /* Dark dominant surfaces — neutral near-black, faintly cool (Xable). Not warm/maro. */
+  --color-canvas: oklch(0.155 0.004 285);
+  --color-surface: oklch(0.205 0.005 285);
+  --color-surface-2: oklch(0.245 0.006 285);
+  --color-peach: oklch(0.225 0.006 285);
 
-  --font-display: 'Gloock', Georgia, 'Times New Roman', serif;
+  /* Light type on dark (neutral) */
+  --color-ink: oklch(0.97 0.002 285);
+  --color-ink-soft: oklch(0.78 0.004 285);
+  --color-muted: oklch(0.6 0.006 285);
+
+  /* Corporate red accent (load-bearing, the only chroma on the page) */
+  --color-accent: oklch(0.605 0.215 26);
+  --color-accent-soft: oklch(0.66 0.2 28);
+  --color-accent-strong: oklch(0.72 0.185 30);
+
+  /* "Drenched" blocks: deepest near-black + light type (kept for class names) */
+  --color-charcoal: oklch(0.115 0.004 285);
+  --color-charcoal-soft: oklch(0.19 0.005 285);
+  --color-on-charcoal: oklch(0.97 0.002 285);
+
+  --color-line: oklch(0.97 0.002 285 / 0.1);
+  --color-line-strong: oklch(0.97 0.002 285 / 0.2);
+
+  --font-display: 'Hanken Grotesk Variable', 'Hanken Grotesk', system-ui, sans-serif;
   --font-sans: 'Hanken Grotesk Variable', 'Hanken Grotesk', system-ui, sans-serif;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
 
-  --shadow-warm-sm: 0 2px 8px oklch(0.27 0.03 40 / 0.06), 0 1px 2px oklch(0.27 0.03 40 / 0.08);
-  --shadow-warm: 0 24px 60px -28px oklch(0.27 0.05 40 / 0.28), 0 6px 16px -10px oklch(0.27 0.05 40 / 0.18);
-  --shadow-warm-lg: 0 50px 110px -40px oklch(0.24 0.06 40 / 0.42);
+  --shadow-warm-sm: 0 2px 10px oklch(0 0 0 / 0.4), 0 1px 2px oklch(0 0 0 / 0.5);
+  --shadow-warm: 0 24px 60px -28px oklch(0 0 0 / 0.65), 0 6px 16px -10px oklch(0 0 0 / 0.5);
+  --shadow-warm-lg: 0 50px 110px -40px oklch(0 0 0 / 0.8), 0 0 0 1px oklch(0.97 0.002 285 / 0.04);
+  /* Tight contact shadow, not a wide halo (the wide-shadow + hairline combo is
+     an AI tell). Reads as a grounded button, not a glowing chip. */
+  --glow-accent: 0 4px 14px -6px oklch(0.605 0.215 26 / 0.45);
 }
 
 /* ----------------------------------------------------------------------------
@@ -65,9 +78,9 @@
 
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    font-weight: 400;
+    font-weight: 800;
     line-height: 1.04;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.022em;
     text-wrap: balance;
   }
 
@@ -83,17 +96,29 @@
 
   img { display: block; max-width: 100%; }
 
-  /* Warm paper grain: barely-there tactile texture, like a fine print stock */
+  /* Fine film grain: barely-there tactile texture over the dark surface.
+     It drifts slowly so the dark never reads as a flat dead field, like the
+     shimmer of a projector beam in a dark studio. */
   body::before {
     content: '';
     position: fixed;
-    inset: 0;
+    inset: -120px;
     z-index: 100;
     pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     background-size: 180px 180px;
-    opacity: 0.04;
-    mix-blend-mode: multiply;
+    opacity: 0.05;
+    mix-blend-mode: screen;
+    animation: grain-drift 7s steps(6) infinite;
+    will-change: transform;
+  }
+  @keyframes grain-drift {
+    0%   { transform: translate(0, 0); }
+    20%  { transform: translate(-12px, 8px); }
+    40%  { transform: translate(6px, -14px); }
+    60%  { transform: translate(-8px, -6px); }
+    80%  { transform: translate(10px, 10px); }
+    100% { transform: translate(0, 0); }
   }
 }
 
@@ -101,30 +126,43 @@
    Typographic helpers
 ---------------------------------------------------------------------------- */
 /* Section rhythm: one tightened scale, tiers for variety (see layout pass) */
-.section { padding-block: clamp(2.75rem, 5.5vw, 5rem); }
-.section-lg { padding-block: clamp(3.5rem, 7vw, 6.25rem); }
-.section-tight { padding-block: clamp(2rem, 4vw, 3.25rem); }
+.section { padding-block: clamp(2.25rem, 4.2vw, 3.75rem); }
+.section-lg { padding-block: clamp(2.75rem, 5.2vw, 4.75rem); }
+.section-tight { padding-block: clamp(1.6rem, 3vw, 2.5rem); }
+
+/* The positioning moment, lit by the studio lamp: a soft red wash centered on
+   the headline, framed by hairlines so it reads as a deliberate, contained
+   block rather than blending into the canvas. */
+.solution-block {
+  background:
+    radial-gradient(60% 120% at 50% 0%, oklch(0.605 0.215 26 / 0.16), transparent 70%),
+    var(--color-charcoal);
+  border-top: 1px solid var(--color-line);
+  border-bottom: 1px solid var(--color-line);
+}
 
 .eyebrow {
   font-family: var(--font-sans);
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-muted);
+  color: var(--color-accent-strong);
   display: inline-flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.6rem;
 }
+/* Leading red rule mark: an editorial tick, not a haloed pill chip. */
 .eyebrow::before {
   content: '';
-  width: clamp(1.4rem, 3vw, 2.6rem);
-  height: 1px;
-  background: var(--color-accent-strong);
+  width: 1.4rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-accent);
 }
 .eyebrow--center::before { display: none; }
 .on-dark .eyebrow,
-.eyebrow--dark { color: oklch(0.78 0.02 70); }
+.eyebrow--dark { color: var(--color-accent-strong); }
 
 .display-1 { font-size: clamp(2.05rem, 4.4vw, 3.65rem); }
 .display-2 { font-size: clamp(2rem, 4.6vw, 3.6rem); }
@@ -134,6 +172,47 @@
 .lede { font-size: clamp(1.1rem, 1.7vw, 1.32rem); line-height: 1.6; color: var(--color-ink-soft); }
 .measure { max-width: 64ch; }
 .measure-sm { max-width: 46ch; }
+
+/* Hero studio light: the red glow breathes like a lamp left on, and drifts a
+   touch toward the cursor (parallax set from JS via --lx / --ly). Signature of
+   "The Dark Studio", not a generic floating blob. */
+.studio-light {
+  --lx: 0px;
+  --ly: 0px;
+  animation: light-breathe 8s var(--ease-out-quint) infinite;
+  transition: transform 1.6s var(--ease-out-expo);
+  will-change: transform, opacity;
+}
+.studio-light--cursor {
+  transform: translate3d(var(--lx), var(--ly), 0);
+}
+@keyframes light-breathe {
+  0%, 100% { opacity: 0.82; }
+  50%      { opacity: 1; }
+}
+
+/* Header: a slow current of red light drifting across the bar. In the studio,
+   the lamp never sits perfectly still. Subtle, in-palette, not a generic mesh. */
+.header-flow {
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    oklch(0.605 0.215 26 / 0.16) 22%,
+    oklch(0.66 0.2 28 / 0.26) 38%,
+    oklch(0.605 0.215 26 / 0.12) 54%,
+    transparent 78%
+  );
+  background-size: 220% 100%;
+  filter: blur(14px);
+  opacity: 0.9;
+  animation: header-flow 14s ease-in-out infinite;
+  will-change: background-position;
+}
+@keyframes header-flow {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
 /* Hand-drawn underline motif under a hero word */
 .mark-word {
@@ -171,45 +250,84 @@
    Buttons
 ---------------------------------------------------------------------------- */
 .btn {
-  --btn-bg: var(--color-accent);
-  --btn-fg: var(--color-ink);
+  /* Primary: clearly translucent red, the dark shows through. The solid red
+     frame keeps it legible as a button; it fills to solid red on hover. */
+  --btn-bg: oklch(0.605 0.215 26 / 0.55);
+  --btn-fg: oklch(0.99 0.001 285);
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
   padding: 1rem 1.75rem;
-  border-radius: 999px;
-  font-weight: 600;
+  border-radius: 6px;
+  font-weight: 700;
   font-size: 1rem;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.005em;
   background: var(--btn-bg);
   color: var(--btn-fg);
   cursor: pointer;
-  border: 1px solid transparent;
-  transition: transform 0.5s var(--ease-out-expo), box-shadow 0.5s var(--ease-out-expo), background-color 0.4s ease;
+  border: 1.5px solid var(--color-accent);
+  backdrop-filter: blur(3px);
+  transition: transform 0.5s var(--ease-out-expo), box-shadow 0.5s var(--ease-out-expo), background-color 0.4s ease, border-color 0.4s ease;
   will-change: transform;
-  box-shadow: var(--shadow-warm-sm);
+  box-shadow: var(--glow-accent);
 }
-.btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-warm); background: var(--color-accent-soft); }
+.btn:hover { transform: translateY(-2px); box-shadow: var(--glow-accent); background: var(--color-accent); border-color: var(--color-accent); }
 .btn:active { transform: translateY(0); }
 .btn svg { transition: transform 0.5s var(--ease-out-expo); }
 .btn:hover svg { transform: translateX(4px); }
 
+/* Secondary: a fine translucent frame. On hover a red fill rises from the
+   bottom (scaleY) and the label flips to white. Tactile, brand-specific, and
+   it keeps the primary red the dominant CTA. */
 .btn--outline {
   background: transparent;
   color: var(--color-ink);
-  border-color: var(--color-line-strong);
+  border-color: oklch(0.605 0.215 26 / 0.45);
+  box-shadow: none;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn--outline::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--color-accent);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.5s var(--ease-out-expo);
+}
+.btn--outline:hover {
+  border-color: var(--color-accent);
+  color: oklch(0.99 0.001 285);
+  transform: translateY(-2px);
   box-shadow: none;
 }
-.btn--outline:hover { background: transparent; border-color: var(--color-ink); transform: translateY(-2px); box-shadow: none; }
+.btn--outline:hover::before { transform: scaleY(1); }
 
-.on-dark .btn--outline { color: var(--color-on-charcoal); border-color: oklch(0.96 0.01 75 / 0.28); }
-.on-dark .btn--outline:hover { border-color: var(--color-on-charcoal); }
+.on-dark .btn--outline { color: var(--color-on-charcoal); border-color: oklch(0.605 0.215 26 / 0.5); }
+.on-dark .btn--outline:hover { color: oklch(0.99 0.001 285); }
+
+/* Featured pricing card: translucent red glass, not a solid slab. Sits in
+   harmony with the dark side cards while still reading as "recommended". */
+.pkg-featured {
+  background: oklch(0.605 0.215 26 / 0.14);
+  border: 1.5px solid oklch(0.605 0.215 26 / 0.55);
+  box-shadow: var(--glow-accent), inset 0 1px 0 oklch(0.97 0.002 285 / 0.06);
+  backdrop-filter: blur(2px);
+}
+.btn--on-accent {
+  --btn-bg: oklch(0.99 0.001 285);
+  --btn-fg: var(--color-accent);
+  box-shadow: 0 10px 30px -12px oklch(0 0 0 / 0.5);
+}
+.btn--on-accent:hover { background: oklch(0.99 0.001 285); transform: translateY(-2px); }
 
 .link-underline {
   position: relative;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--color-accent-strong);
 }
 .link-underline::after {
@@ -322,6 +440,10 @@
   html { scroll-behavior: auto; }
   .reveal, .reveal-img { opacity: 1; transform: none; clip-path: none; transition: none; }
   .marquee { animation: none; }
+  body::before { animation: none; inset: 0; }
+  .header-flow { animation: none; }
+  .studio-light { animation: none; transform: none; transition: none; }
+  .btn--outline::before { transition: none; }
   .mark-word svg path { stroke-dashoffset: 0; transition: none; }
   .draw-line { stroke-dashoffset: 0; transition: none; }
   .ink-path { stroke-dashoffset: 0; transition: none; }
