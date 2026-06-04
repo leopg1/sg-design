@@ -10,8 +10,10 @@ export const brand = {
   name: 'SG Design',
   owner: 'Georgiana Severin',
   tagline: 'Identitate vizuală premium pentru autori de cursuri',
-  // TODO (de confirmat cu clientul): date de contact reale SG Design
-  email: 'contact@sgdesign.ro',
+  email: 'sg.design.office1@gmail.com',
+  phone: '0770.178.063',
+  // tel: link needs the digits without separators
+  phoneHref: '+40770178063',
   city: 'Iași, România',
 };
 
