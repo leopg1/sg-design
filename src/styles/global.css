@@ -203,9 +203,9 @@
     transparent 78%
   );
   background-size: 220% 100%;
-  filter: blur(14px);
-  opacity: 0.9;
-  animation: header-flow 14s ease-in-out infinite;
+  filter: blur(18px);
+  opacity: 0.55;
+  animation: header-flow 16s ease-in-out infinite;
   will-change: background-position;
 }
 @keyframes header-flow {
